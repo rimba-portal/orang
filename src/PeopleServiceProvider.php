@@ -6,15 +6,17 @@ namespace Rimba\People;
 
 use Rimba\Base\Services\BitesServiceProvider;
 
+
 class PeopleServiceProvider extends BitesServiceProvider
 {
+
     protected function bootPackage(): void
     {
         //
     }
-
     protected function registerPackage(): void
     {
         //
     }
+
 }
