@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('staff', function (Blueprint $table) {
+        Schema::create('staff', function (Blueprint $table): void {
             $table->id();
             $table->foreignId('user_id')->nullable()->constrained();
             $table->foreignId('org_corp_id')->nullable()->constrained();
@@ -23,7 +23,7 @@ return new class extends Migration
             $table->json('attributes')->nullable();
             $table->timestamps();
         });
-        Schema::create('staff_positions', function (Blueprint $table) {
+        Schema::create('staff_positions', function (Blueprint $table): void {
             $table->id();
             $table->foreignId('staff_id')->constrained();
             $table->foreignId('job_position_id')->constrained();
@@ -34,7 +34,7 @@ return new class extends Migration
             $table->json('attributes')->nullable();
             $table->timestamps();
         });
-        Schema::create('movements', function (Blueprint $table) {
+        Schema::create('movements', function (Blueprint $table): void {
             $table->id();
             $table->enum('type', ['transfer', 'promotion', 'demotion', 'assignment', 'end_of_assignment']);
             $table->date('effective_date');
