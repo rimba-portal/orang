@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Rimba\Agreement\Models\Agreement;
 use Rimba\Organization\Models\OrgCorp;
 use Rimba\Organization\Models\OrgUnit;
+use Rimba\Attributing\Traits\HasPersonAttributes;
 
 #[Fillable([
     'user_id',
@@ -28,6 +29,7 @@ use Rimba\Organization\Models\OrgUnit;
 class Staff extends Model
 {
     use HasFactory;
+    use HasPersonAttributes;
 
     /**
      * Get the attributes that should be cast.
