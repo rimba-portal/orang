@@ -14,6 +14,7 @@ use Rimba\Agreement\Models\Agreement;
 use Rimba\Attributing\Traits\HasPersonAttributes;
 use Rimba\Organization\Models\OrgCorp;
 use Rimba\Organization\Models\OrgUnit;
+use Spatie\Permission\Traits\HasRoles;
 
 #[Fillable([
     'user_id',
@@ -30,6 +31,9 @@ class Staff extends Model
 {
     use HasFactory;
     use HasPersonAttributes;
+    use HasRoles;
+
+    protected string $guard_name = 'web';
 
     /**
      * Get the attributes that should be cast.
