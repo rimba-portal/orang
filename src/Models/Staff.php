@@ -6,7 +6,6 @@ namespace Rimba\People\Models;
 
 use App\Models\User;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
-use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -15,7 +14,6 @@ use Rimba\Agreement\Models\Agreement;
 use Rimba\Attributing\Traits\HasPersonAttributes;
 use Rimba\Organization\Models\OrgCorp;
 use Rimba\Organization\Models\OrgUnit;
-use Rimba\People\Observers\StaffObserver;
 
 #[Fillable([
     'user_id',
@@ -28,7 +26,6 @@ use Rimba\People\Observers\StaffObserver;
     'staff_no',
     'attributes',
 ])]
-#[ObservedBy([StaffObserver::class])]
 class Staff extends Model
 {
     use HasFactory;
