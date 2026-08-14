@@ -16,10 +16,11 @@ return new class extends Migration
             $table->foreignId('user_id')->nullable()->constrained();
             $table->foreignId('org_corp_id')->nullable()->constrained();
             $table->foreignId('org_unit_id')->nullable()->constrained();
+            $table->foreignId('job_contract_id')->nullable()->constrained('agreements');
             $table->enum('type', ['FTE', 'FTC', 'TPC', 'Intern'])->default('FTE');
             $table->enum('status', ['active', 'inactive', 'suspended'])->default('active');
             $table->string('name')->nullable();
-            $table->string('staff_no')->nullable();
+            $table->string('staff_no')->nullable()->unique();
             $table->json('attributes')->nullable();
             $table->timestamps();
         });

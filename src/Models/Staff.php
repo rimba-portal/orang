@@ -74,6 +74,6 @@ class Staff extends Model
 
     public function agreement(): BelongsTo
     {
-        return $this->belongsTo(Agreement::class);
+        return $this->belongsTo(Agreement::class, 'job_contract_id');
     }
 }
