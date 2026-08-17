@@ -18,6 +18,7 @@ use Spatie\Permission\Traits\HasRoles;
 
 #[Fillable([
     'user_id',
+    'uuid',
     'org_corp_id',
     'org_unit_id',
     'job_contract_id',
@@ -75,5 +76,12 @@ class Staff extends Model
     public function agreement(): BelongsTo
     {
         return $this->belongsTo(Agreement::class, 'job_contract_id');
+    }
+
+    public function functionalReportsToStaff(): ?Staff
+    {
+        $reportsToUuid = $this->agreement?->jobPosition->getAttribute('attributes')['reports_to'] ?? null;
+        $reportsToStaff = Staff::where('uuid', $reportsToUuid)->first();
+        return $reportsToStaff;
     }
 }
