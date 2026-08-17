@@ -7,7 +7,6 @@ namespace Rimba\People\Http\UI\Admin\Resources\Staff\Tables;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
-use Filament\Actions\ExportAction;
 use Filament\Tables\Columns;
 use Filament\Tables\Table;
 

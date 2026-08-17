@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Rimba\People\Http\UI\Admin\Resources\Staff\Pages;
 
-use Rimba\People\Http\UI\Admin\Resources\Staff\StaffResource;
 use Filament\Actions\DeleteAction;
 use Filament\Resources\Pages\EditRecord;
+use Rimba\People\Http\UI\Admin\Resources\Staff\StaffResource;
 
 class EditStaff extends EditRecord
 {

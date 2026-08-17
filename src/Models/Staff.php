@@ -81,7 +81,7 @@ class Staff extends Model
     public function functionalReportsToStaff(): ?Staff
     {
         $reportsToUuid = $this->agreement?->jobPosition->getAttribute('attributes')['reports_to'] ?? null;
-        $reportsToStaff = Staff::where('uuid', $reportsToUuid)->first();
-        return $reportsToStaff;
+
+        return Staff::where('uuid', $reportsToUuid)->first();
     }
 }

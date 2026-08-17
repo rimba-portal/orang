@@ -4,6 +4,10 @@ declare(strict_types=1);
 
 namespace Rimba\People\Http\UI\Admin\Resources\Staff;
 
+use BackedEnum;
+use Filament\Resources\Resource;
+use Filament\Schemas\Schema;
+use Filament\Tables\Table;
 use Rimba\People\Http\UI\Admin\Resources\Staff\Pages\CreateStaff;
 use Rimba\People\Http\UI\Admin\Resources\Staff\Pages\EditStaff;
 use Rimba\People\Http\UI\Admin\Resources\Staff\Pages\ListStaff;
@@ -12,12 +16,7 @@ use Rimba\People\Http\UI\Admin\Resources\Staff\RelationManagers\RevokedCertifica
 use Rimba\People\Http\UI\Admin\Resources\Staff\RelationManagers\ValidCertificatesRelationManager;
 use Rimba\People\Http\UI\Admin\Resources\Staff\Schemas\StaffForm;
 use Rimba\People\Http\UI\Admin\Resources\Staff\Tables\StaffTable;
-use BackedEnum;
 use Rimba\People\Models\Staff;
-use Filament\Resources\Resource;
-use Filament\Schemas\Schema;
-use Filament\Tables\Table;
-use Illuminate\Contracts\Support\Htmlable;
 use UnitEnum;
 
 class StaffResource extends Resource
@@ -29,7 +28,7 @@ class StaffResource extends Resource
     protected static string|UnitEnum|null $navigationGroup = 'People';
 
     protected static ?string $recordTitleAttribute = 'name';
-    
+
     protected static ?int $navigationSort = 34;
 
     // public static function getGloballySearchableAttributes(): array
