@@ -16,22 +16,13 @@ class StaffTable
     {
         return $table
             ->columns([
-                // Columns\Layout\Split::make([
-                // Columns\Layout\Stack::make([
-                Columns\TextColumn::make('user.name')
-                    ->searchable(),
-                Columns\TextColumn::make('staff_number')->searchable()->sortable()->copyable(),
-                Columns\TextColumn::make('staff_old_number')->searchable(),
-                Columns\TextColumn::make('jobPosition.title')
-                    ->searchable(),
-                // ]),
-                // ]),
-                Columns\TextColumn::make('orgUnit.code')
-                    ->searchable(),
+                Columns\TextColumn::make('user.name')->searchable()->sortable(),
+                Columns\TextColumn::make('staff_no')->searchable()->sortable()->copyable(),
+                Columns\TextColumn::make('attributes.staff_old_number')->label('Staff Old Number')->searchable(),
+                Columns\TextColumn::make('agreement.jobPosition.title')->searchable(),
+                Columns\TextColumn::make('orgUnit.name')->searchable(),
                 Columns\TextColumn::make('name')->searchable()->sortable(),
-                Columns\TextColumn::make('shift_code')
-                    ->searchable(),
-
+                Columns\TextColumn::make('attributes.shift_code')->label('Shift Code')->searchable(),
                 Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
