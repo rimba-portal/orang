@@ -14,6 +14,7 @@ use Rimba\Agreement\Models\Agreement;
 use Rimba\Attributing\Traits\HasPersonAttributes;
 use Rimba\Organization\Models\OrgCorp;
 use Rimba\Organization\Models\OrgUnit;
+use Rimba\Wfm\Traits\HasWorkforceLifecycle;
 use Spatie\Permission\Traits\HasRoles;
 
 #[Fillable([
@@ -33,6 +34,7 @@ class Staff extends Model
     use HasFactory;
     use HasPersonAttributes;
     use HasRoles;
+    use HasWorkforceLifecycle;
 
     protected string $guard_name = 'web';
 
