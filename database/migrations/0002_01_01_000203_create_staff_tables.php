@@ -25,26 +25,6 @@ return new class extends Migration
             $table->json('attributes')->nullable();
             $table->timestamps();
         });
-        Schema::create('staff_positions', function (Blueprint $table): void {
-            $table->id();
-            $table->foreignId('staff_id')->constrained();
-            $table->foreignId('job_position_id')->constrained();
-            $table->enum('assignment_type', ['primary', 'secondary', 'acting'])->default('primary');
-            $table->enum('status', ['active', 'ended', 'pending'])->default('active');
-            $table->date('start_date');
-            $table->date('end_date')->nullable();
-            $table->json('attributes')->nullable();
-            $table->timestamps();
-        });
-        Schema::create('movements', function (Blueprint $table): void {
-            $table->id();
-            $table->enum('type', ['transfer', 'promotion', 'demotion', 'assignment', 'end_of_assignment']);
-            $table->date('effective_date');
-            $table->json('from')->nullable();
-            $table->json('to')->nullable();
-            $table->morphs('movable');
-            $table->timestamps();
-        });
     }
 
     /**
@@ -52,8 +32,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('movements');
-        Schema::dropIfExists('staff_positions');
         Schema::dropIfExists('staff');
     }
 };
