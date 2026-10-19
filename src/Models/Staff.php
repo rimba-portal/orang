@@ -15,6 +15,7 @@ use Rimba\Agreement\Models\Agreement;
 use Rimba\Agreement\Traits\HasAgreements;
 use Rimba\Attributing\Traits\HasPersonAttributes;
 use Rimba\Attributing\Traits\SeedsPersonAttributes;
+use Rimba\Base\Contracts\AfterJsonSeed;
 use Rimba\Organization\Models\OrgCorp;
 use Rimba\Organization\Models\OrgUnit;
 use Rimba\Position\Models\JobPosition;
