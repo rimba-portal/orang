@@ -18,9 +18,6 @@ final readonly class SyncStaffAbacRolesOnAgreementScopeChanged
 
     public function handle(AgreementScopeChanged $event): void
     {
-        /*
-         * Orang only cares about JobPosition scope changes.
-         */
         if ($event->scopeableType !== JobPosition::class) {
             return;
         }
@@ -33,6 +30,13 @@ final readonly class SyncStaffAbacRolesOnAgreementScopeChanged
             return;
         }
 
+        /*
+         * Job Contract:
+         *
+         * Party A = OrgUnit
+         * Party B = Staff
+         * Scope   = JobPosition
+         */
         $staff = $agreement->partyB;
 
         if (! $staff instanceof Staff) {
@@ -40,11 +44,13 @@ final readonly class SyncStaffAbacRolesOnAgreementScopeChanged
         }
 
         /*
-         * Forget the previously resolved JobPosition so the
-         * ABAC synchronization sees the current Agreement state.
+         * Force Staff::jobPosition to resolve the newly-created
+         * AgreementScope.
          */
         $staff->unsetRelation('jobPosition');
 
-        $this->syncStaffAbacRolesAction->execute($staff);
+        $this->syncStaffAbacRolesAction->execute(
+            $staff->refresh()
+        );
     }
 }
