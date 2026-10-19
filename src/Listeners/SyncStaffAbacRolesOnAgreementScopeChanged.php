@@ -26,14 +26,14 @@ final readonly class SyncStaffAbacRolesOnAgreementScopeChanged
         }
 
         $agreement = Agreement::query()
-            ->with('partyA')
+            ->with('partyB')
             ->find($event->agreementId);
 
         if (! $agreement) {
             return;
         }
 
-        $staff = $agreement->partyA;
+        $staff = $agreement->partyB;
 
         if (! $staff instanceof Staff) {
             return;
