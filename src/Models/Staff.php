@@ -15,11 +15,11 @@ use Illuminate\Database\Eloquent\Relations\HasOneThrough;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Rimba\Agreement\Models\Agreement;
 use Rimba\Agreement\Models\AgreementScope;
+use Rimba\Agreement\Traits\HasAgreements;
 use Rimba\Attributing\Traits\HasPersonAttributes;
 use Rimba\Organization\Models\OrgCorp;
 use Rimba\Organization\Models\OrgUnit;
 use Rimba\Position\Models\JobPosition;
-use Rimba\Wfm\Traits\HasWorkforceLifecycle;
 use Spatie\Permission\Traits\HasRoles;
 
 #[Fillable([
@@ -36,10 +36,10 @@ use Spatie\Permission\Traits\HasRoles;
 ])]
 class Staff extends Model
 {
+    use HasAgreements;
     use HasFactory;
     use HasPersonAttributes;
     use HasRoles;
-    use HasWorkforceLifecycle;
 
     protected string $guard_name = 'web';
 
@@ -60,10 +60,10 @@ class Staff extends Model
         ];
     }
 
-    public function staffPositions(): HasMany
-    {
-        return $this->hasMany(StaffPosition::class);
-    }
+    // public function staffPositions(): HasMany
+    // {
+    //     return $this->hasMany(StaffPosition::class);
+    // }
 
     public function user(): BelongsTo
     {
@@ -120,112 +120,112 @@ class Staff extends Model
             ->first();
     }
 
-    /**
-     * Agreements where this Staff is Party A.
-     */
-    public function agreementsAsPartyA(): MorphMany
-    {
-        return $this->morphMany(
-            Agreement::class,
-            'partyA',
-            'party_a_type',
-            'party_a_id'
-        );
-    }
+    // /**
+    //  * Agreements where this Staff is Party A.
+    //  */
+    // public function agreementsAsPartyA(): MorphMany
+    // {
+    //     return $this->morphMany(
+    //         Agreement::class,
+    //         'partyA',
+    //         'party_a_type',
+    //         'party_a_id'
+    //     );
+    // }
 
-    /**
-     * Agreements where this Staff is Party B.
-     */
-    public function agreementsAsPartyB(): MorphMany
-    {
-        return $this->morphMany(
-            Agreement::class,
-            'partyB',
-            'party_b_type',
-            'party_b_id'
-        );
-    }
+    // /**
+    //  * Agreements where this Staff is Party B.
+    //  */
+    // public function agreementsAsPartyB(): MorphMany
+    // {
+    //     return $this->morphMany(
+    //         Agreement::class,
+    //         'partyB',
+    //         'party_b_type',
+    //         'party_b_id'
+    //     );
+    // }
 
-    /**
-     * Agreement scopes that directly reference this Staff.
-     */
-    public function agreementScopes(): MorphMany
-    {
-        return $this->morphMany(
-            AgreementScope::class,
-            'scopeable'
-        );
-    }
+    // /**
+    //  * Agreement scopes that directly reference this Staff.
+    //  */
+    // public function agreementScopes(): MorphMany
+    // {
+    //     return $this->morphMany(
+    //         AgreementScope::class,
+    //         'scopeable'
+    //     );
+    // }
 
-    /**
-     * Build a query for every agreement involving this Staff.
-     *
-     * The Staff may be:
-     *
-     * - Party A
-     * - Party B
-     * - An agreement scope
-     *
-     * @return Builder<Agreement>
-     */
-    public function agreementsQuery(): Builder
-    {
-        $staffId = $this->getKey();
-        $staffType = $this->getMorphClass();
+    // /**
+    //  * Build a query for every agreement involving this Staff.
+    //  *
+    //  * The Staff may be:
+    //  *
+    //  * - Party A
+    //  * - Party B
+    //  * - An agreement scope
+    //  *
+    //  * @return Builder<Agreement>
+    //  */
+    // public function agreementsQuery(): Builder
+    // {
+    //     $staffId = $this->getKey();
+    //     $staffType = $this->getMorphClass();
 
-        return Agreement::query()
-            ->where(function (Builder $query) use ($staffId, $staffType): void {
-                $query
-                    ->where(function (Builder $partyA) use ($staffId, $staffType): void {
-                        $partyA
-                            ->where('party_a_type', $staffType)
-                            ->where('party_a_id', $staffId);
-                    })
-                    ->orWhere(function (Builder $partyB) use ($staffId, $staffType): void {
-                        $partyB
-                            ->where('party_b_type', $staffType)
-                            ->where('party_b_id', $staffId);
-                    })
-                    ->orWhereHas(
-                        'scopes',
-                        function (Builder $scope) use ($staffId, $staffType): void {
-                            $scope
-                                ->where('scopeable_type', $staffType)
-                                ->where('scopeable_id', $staffId);
-                        }
-                    );
-            })
-            ->distinct();
-    }
+    //     return Agreement::query()
+    //         ->where(function (Builder $query) use ($staffId, $staffType): void {
+    //             $query
+    //                 ->where(function (Builder $partyA) use ($staffId, $staffType): void {
+    //                     $partyA
+    //                         ->where('party_a_type', $staffType)
+    //                         ->where('party_a_id', $staffId);
+    //                 })
+    //                 ->orWhere(function (Builder $partyB) use ($staffId, $staffType): void {
+    //                     $partyB
+    //                         ->where('party_b_type', $staffType)
+    //                         ->where('party_b_id', $staffId);
+    //                 })
+    //                 ->orWhereHas(
+    //                     'scopes',
+    //                     function (Builder $scope) use ($staffId, $staffType): void {
+    //                         $scope
+    //                             ->where('scopeable_type', $staffType)
+    //                             ->where('scopeable_id', $staffId);
+    //                     }
+    //                 );
+    //         })
+    //         ->distinct();
+    // }
 
-    /**
-     * Collect every agreement involving this Staff.
-     *
-     * Usage:
-     *
-     * $staff->agreements
-     */
-    public function agreements()
-    {
-        return Agreement::query()
-            ->where(function ($query): void {
+    // /**
+    //  * Collect every agreement involving this Staff.
+    //  *
+    //  * Usage:
+    //  *
+    //  * $staff->agreements
+    //  */
+    // public function agreements()
+    // {
+    //     return Agreement::query()
+    //         ->where(function ($query): void {
 
-                $query
-                    ->where(function ($q): void {
-                        $q->where('party_a_type', $this->getMorphClass())
-                            ->where('party_a_id', $this->id);
-                    })
+    //             $query
+    //                 ->where(function ($q): void {
+    //                     $q->where('party_a_type', $this->getMorphClass())
+    //                         ->where('party_a_id', $this->id);
+    //                 })
 
-                    ->orWhere(function ($q): void {
-                        $q->where('party_b_type', $this->getMorphClass())
-                            ->where('party_b_id', $this->id);
-                    })
+    //                 ->orWhere(function ($q): void {
+    //                     $q->where('party_b_type', $this->getMorphClass())
+    //                         ->where('party_b_id', $this->id);
+    //                 })
 
-                    ->orWhereHas('scopes', function ($q): void {
-                        $q->where('scopeable_type', $this->getMorphClass())
-                            ->where('scopeable_id', $this->id);
-                    });
-            })
-            ->distinct();
-    }
+    //                 ->orWhereHas('scopes', function ($q): void {
+    //                     $q->where('scopeable_type', $this->getMorphClass())
+    //                         ->where('scopeable_id', $this->id);
+    //                 });
+    //         })
+    //         ->distinct();
+    // }
 }

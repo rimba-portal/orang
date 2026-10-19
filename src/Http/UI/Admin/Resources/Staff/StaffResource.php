@@ -8,6 +8,7 @@ use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Tables\Table;
+use Rimba\Agreement\Http\UI\RelationManagers\AgreementsRelationManager;
 use Rimba\People\Http\UI\Admin\Resources\Staff\Pages\CreateStaff;
 use Rimba\People\Http\UI\Admin\Resources\Staff\Pages\EditStaff;
 use Rimba\People\Http\UI\Admin\Resources\Staff\Pages\ListStaff;
@@ -49,6 +50,7 @@ class StaffResource extends Resource
     public static function getRelations(): array
     {
         return [
+            AgreementsRelationManager::class,
             // ValidCertificatesRelationManager::class,
             // RevokedCertificatesRelationManager::class,
             // ExpiredCertificatesRelationManager::class,
