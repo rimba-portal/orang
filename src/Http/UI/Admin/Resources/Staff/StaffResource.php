@@ -32,10 +32,10 @@ class StaffResource extends Resource
 
     protected static ?int $navigationSort = 34;
 
-    // public static function getGloballySearchableAttributes(): array
-    // {
-    //     return ['staff_number', 'name', 'jobPosition.title', 'orgUnit.code'];
-    // }
+    public static function getGloballySearchableAttributes(): array
+    {
+        return ['staff_number', 'name', 'orgUnit.code'];
+    }
 
     public static function form(Schema $schema): Schema
     {

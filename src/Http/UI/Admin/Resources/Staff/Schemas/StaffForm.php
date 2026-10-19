@@ -9,6 +9,8 @@ use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 use Illuminate\Database\Eloquent\Builder;
+use Rimba\People\Builders\AvailableUserQuery;
+use Rimba\People\Models\Staff;
 
 class StaffForm
 {
@@ -22,9 +24,15 @@ class StaffForm
                     ->schema([
                         Select::make('user_id')
                             ->label('User')
-                            ->relationship('user', 'name')
-                            ->getOptionLabelFromRecordUsing(
-                                fn ($record) => $record->name
+                            ->relationship(
+                                name: 'user',
+                                titleAttribute: 'name',
+                                modifyQueryUsing: function (
+                                    Builder $query,
+                                    ?Staff $record,
+                                ): Builder {
+                                    return AvailableUserQuery::make($record);
+                                },
                             )
                             ->searchable()
                             ->preload(),
@@ -37,6 +45,7 @@ class StaffForm
                         TextInput::make('staff_no')
                             ->label('Staff Number')
                             ->required(),
+
                         Select::make('roles')
                             ->label('Roles')
                             ->relationship(
@@ -54,17 +63,17 @@ class StaffForm
                     ->icon('heroicon-o-briefcase')
                     ->columns(2)
                     ->schema([
-                        Select::make('job_contract_id')
-                            ->label('Job Position')
-                            ->relationship('agreement.jobPosition', 'title')
-                            ->searchable()
-                            ->preload(),
-                        Select::make('org_unit_id')
-                            ->label('Organisation Unit')
-                            ->relationship('orgUnit', 'name')
+                        Select::make('org_corp_id')
+                            ->label('Organisation')
+                            ->relationship('orgCorp', 'name')
                             ->searchable()
                             ->preload(),
 
+                        Select::make('org_unit_id')
+                            ->label('Unit')
+                            ->relationship('orgUnit', 'name')
+                            ->searchable()
+                            ->preload(),
                     ]),
             ]);
     }
