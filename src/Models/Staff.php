@@ -14,6 +14,7 @@ use Illuminate\Database\Eloquent\Relations\HasOneThrough;
 use Rimba\Agreement\Models\Agreement;
 use Rimba\Agreement\Traits\HasAgreements;
 use Rimba\Attributing\Traits\HasPersonAttributes;
+use Rimba\Attributing\Traits\SeedsPersonAttributes;
 use Rimba\Organization\Models\OrgCorp;
 use Rimba\Organization\Models\OrgUnit;
 use Rimba\Position\Models\JobPosition;
@@ -31,12 +32,13 @@ use Spatie\Permission\Traits\HasRoles;
     'staff_no',
     'attributes',
 ])]
-class Staff extends Model
+class Staff extends Model implements AfterJsonSeed
 {
     use HasAgreements;
     use HasFactory;
     use HasPersonAttributes;
     use HasRoles;
+    use SeedsPersonAttributes;
 
     protected string $guard_name = 'web';
 
